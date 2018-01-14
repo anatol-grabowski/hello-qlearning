@@ -22,16 +22,17 @@ def draw_board():
             vb.addItem(r)
 
             if cell == ' ': continue
-            t_up = pg.TextItem(str(q_matrix[i, j, 0]), (255, 255, 255), anchor=(0, 0))
+            color = (255, 255, 255)
+            t_up = pg.TextItem(str(q_matrix[i, j, 0]), color)
             t_up.setPos(i + 0.3, -j + 0.2)
             vb.addItem(t_up)
-            t_dn = pg.TextItem(str(q_matrix[i, j, 1]), (255, 255, 255), anchor=(0, 0))
+            t_dn = pg.TextItem(str(q_matrix[i, j, 1]), color)
             t_dn.setPos(i + 0.3, -j + 0.9)
             vb.addItem(t_dn)
-            t_lt = pg.TextItem(str(q_matrix[i, j, 2]), (255, 255, 255), anchor=(0, 0))
+            t_lt = pg.TextItem(str(q_matrix[i, j, 2]), color)
             t_lt.setPos(i + 0.6, -j + 0.6)
             vb.addItem(t_lt)
-            t_rt = pg.TextItem(str(q_matrix[i, j, 3]), (255, 255, 255), anchor=(0, 0))
+            t_rt = pg.TextItem(str(q_matrix[i, j, 3]), color)
             t_rt.setPos(i + 0.0, -j + 0.6)
             vb.addItem(t_rt)
     
@@ -56,7 +57,7 @@ def action(act):
 
     cell = board[actor_pos[1]][actor_pos[0]]
 
-    # Q[s] += alpha * (r[s+1] + lambda * max(Q[s+1]) - Q[s])
+    # Q[s] = Q[s] + learning_rate * (reward[s->s+1] + shortterm_preference * max(Q[s+1]) - Q[s])
     alpha = 0.5
     lambd = 0.5
     reward = -0.04
