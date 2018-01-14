@@ -42,7 +42,7 @@ def draw_board():
     vb.addItem(r)
 
 
-def action(act):
+def make_action(act):
     x, y = actor_pos
     new_x, new_y = actor_pos.copy()
     if act == 0: new_y += 1
@@ -68,12 +68,19 @@ def action(act):
     q_matrix[x, y, act] += alpha * (reward + lambd * max_new_q - q)
     if cell in '+-': actor_pos[:] = default_pos
 
+
+def pick_best_action():
+    best_action = q_matrix[actor_pos[0], actor_pos[1]].argmax()
+    return best_action
+
+
 def handle_kb(evt):
     if evt.key() == pg.QtCore.Qt.Key_J: act = 0
     if evt.key() == pg.QtCore.Qt.Key_K: act = 1
     if evt.key() == pg.QtCore.Qt.Key_L: act = 2
     if evt.key() == pg.QtCore.Qt.Key_H: act = 3
-    action(act)
+    if evt.key() == pg.QtCore.Qt.Key_A: act = pick_best_action()
+    make_action(act)
     draw_board()
 
 board = ['ooo+',
